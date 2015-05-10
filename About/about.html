@@ -1,4 +1,3 @@
-CTYPE HTML>
 <html>
 <head>
     <title>Safari SQLite Hello World Example</title>
@@ -185,11 +184,6 @@ CTYPE HTML>
 
                         // Append the list item.
                         list.append( "<li>" + row.name + "</li>" );
-                    }
-                );
-            };
-
-
             // Bind the form to save the girl.
             form.submit(
                 function( event ){
@@ -205,14 +199,12 @@ CTYPE HTML>
                                 .val( "" )
                                 .focus()
                             ;
-
                             // Refresh the girl list.
                             getGirls( refreshGirls );
                         }
                     );
                 }
             );
-
 
             // Bind to the clear girls link.
             clearGirls.click(

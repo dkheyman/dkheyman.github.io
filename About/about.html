@@ -1,8 +1,11 @@
+<!DOCTYPE HTML>
 <html>
 <head>
     <title>Safari SQLite Hello World Example</title>
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
-    <script type="text/javascript">
+    <script src="https://code.jquery.com/jquery-1.4.2.min.js"></script>
+</head>
+<body>
+    <script>
 
         // The first thing we want to do is create the local
         // database (if it doesn't exist) or open the connection
@@ -184,6 +187,11 @@
 
                         // Append the list item.
                         list.append( "<li>" + row.name + "</li>" );
+                    }
+                );
+            };
+
+
             // Bind the form to save the girl.
             form.submit(
                 function( event ){
@@ -199,12 +207,14 @@
                                 .val( "" )
                                 .focus()
                             ;
+
                             // Refresh the girl list.
                             getGirls( refreshGirls );
                         }
                     );
                 }
             );
+
 
             // Bind to the clear girls link.
             clearGirls.click(
@@ -225,9 +235,6 @@
         });
 
     </script>
-</head>
-<body>
- 
     <h1>
         Safari SQLite Hello World Example
     </h1>
@@ -249,7 +256,5 @@
     <p>
         <a id="clearGirls" href="#">Clear Girls</a>!
     </p>
- 
 </body>
 </html>
-

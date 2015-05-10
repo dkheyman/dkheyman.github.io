@@ -1,8 +1,110 @@
 <html>
     <head>
         <title> About </title>
+        <script type="text/javascript" src="jquery-1.4.1.min.js"></script>
+        <script type="text/javascript">
+            var databaseOptions = {
+                fileName: "classes",
+                version: "1.0",
+                displayName: "Classes List",
+                maxSize: 1024
+            };
+
+            var database = openDatabase(
+                databaseOptions.fileName,
+                databaseOptions.version,
+                databaseOptions.displayName,
+                databaseOptions.mazSize
+            );
+
+            database.transaction(
+                function ( transaction ) {
+                    transaction.executeSql(
+                        "select * from classes;"
+                    );
+                }
+            );
+
+            var saveClass = function( name, callback) {
+                database.transaction(
+                    function( transaction ){
+                        transaction.executeSql(
+                        (
+                            "insert into classes(" + 
+                            "name" +
+                            ") values ( " +
+                            "? " +
+                            ");"
+                        );
+                        [
+                            name
+                        ],
+                            function (transaction, results ) {
+                                callback( results.insertId );
+                            }
+                        );
+                    }
+                );
+            };
+
+            $(function(){
+                var form = $( "form" );
+                var list = $( "#classes" );
+                var refreshClasses = function( results ){
+                    list.empty();
+                    if (!results){
+                        return;
+                    }
+
+                    $.each(
+                        results.rows,
+                        function( rowIndex ){
+                            var row = results.row.item( rowIndex );
+                            list.append( "<li>" + row.name + "</li>" );
+                        }
+                    );
+                };
+            form.submit(
+                function( event ){
+                    event.preventDefault();
+                    saveClasses(
+                        form.find( "input.name" ).val(),
+                        function(){
+                            form.find( "input.name" )
+                                .val( "" )
+                                .focus()
+                            ;
+                            getClasses( refreshClasses );
+                        }
+                    );
+                }
+            );
+
+            clearClasses.click(
+                function( event ){
+                    event.preventDefault();
+                    deleteClasses( refreshClasses );
+                }
+            );
+
+            getClasses(refreshClasses);
+        });
+
+    </script>
     </head>
     <body>
         <h1> 19 years old </h1>
+        <form>
+            Name:
+                <input type="text" name="Class" class="class" />
+                <input type="submit" value="Add Class" />
+        </form>
+        <h2>
+            Classes
+        </h2>
+        <ul id="classes"></ul>
+        <p>
+            <a id="clearClasses" href="#">Clear Classes</a>
+        </p>
     </body>
 </html>
